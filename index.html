@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   :root{
     --iron: #1B1917;
@@ -469,6 +470,75 @@
     font-size: 18px;
   }
 
+  /* ---------- enlist (lead capture) ---------- */
+
+  .enlist{
+    text-align: center;
+  }
+
+  .enlist-form{
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: left;
+    background: var(--iron-dim);
+    border: 1px solid rgba(184,146,61,0.3);
+    padding: 40px 36px;
+  }
+
+  .form-row{
+    margin-bottom: 20px;
+  }
+
+  .form-row label{
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+
+  .form-row input,
+  .form-row select{
+    width: 100%;
+    background: var(--iron);
+    border: 1px solid var(--steel);
+    color: var(--parchment);
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    padding: 12px 14px;
+    border-radius: 2px;
+  }
+
+  .form-row input:focus,
+  .form-row select:focus{
+    outline: none;
+    border-color: var(--gold);
+  }
+
+  .form-submit{
+    width: 100%;
+    border: 1px solid var(--ember-bright);
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  .enlist-status{
+    text-align: center;
+    font-size: 14px;
+    color: var(--gold);
+    margin-top: 14px;
+    min-height: 18px;
+  }
+
+  .enlist-footnote{
+    max-width: 480px;
+    margin: 20px auto 0;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--steel);
+  }
+
   /* ---------- footer ---------- */
 
   footer{
@@ -511,7 +581,7 @@
       <a href="#rite">The Wardens</a>
       <a href="#oath">The Oath</a>
     </nav>
-    <a href="#oath" class="nav-cta">Join the Watch</a>
+    <a href="#enlist" class="nav-cta">Join the Watch</a>
   </div>
 </header>
 
@@ -524,7 +594,7 @@
   <h1>The siege on your home never ends.<br>Neither do we.</h1>
   <p class="sub">Rot, rust, and ruin never stop testing your walls. Hearthguard keeps a standing watch so you don't have to.</p>
   <div class="cta-row">
-    <a href="#oath" class="btn-primary">Take the Oath</a>
+    <a href="#enlist" class="btn-primary">Take the Oath</a>
     <a href="#order" class="btn-ghost">Hear the Tale</a>
   </div>
 </section>
@@ -608,7 +678,7 @@
           <li>Digital log of every visit</li>
           <li>15% off any repair work booked through the guild</li>
         </ul>
-        <a href="#" class="charter-cta">Swear the Squire's Oath</a>
+        <a href="#enlist" class="charter-cta" data-plan="Squire's Watch">Swear the Squire's Oath</a>
       </div>
 
       <div class="charter featured">
@@ -626,7 +696,7 @@
           <li>25% off labor beyond included hours</li>
           <li>Priority scheduling ahead of Squire's rank</li>
         </ul>
-        <a href="#" class="charter-cta">Swear the Knight's Oath</a>
+        <a href="#enlist" class="charter-cta" data-plan="Knight's Guard">Swear the Knight's Oath</a>
       </div>
     </div>
 
@@ -634,13 +704,108 @@
   </div>
 </section>
 
-<section class="muster">
+<section class="enlist" id="enlist">
   <div class="wrap">
-    <h2>Your home has been under siege since the day it was built.</h2>
-    <p>It's time it had someone standing watch.</p>
-    <a href="#oath" class="btn-primary">Take the Oath</a>
+    <div class="section-head">
+      <div class="kicker">Enlistment</div>
+      <h2>Answer the muster</h2>
+      <p>Leave your name and we'll reach out to schedule your home's first inspection.</p>
+    </div>
+
+    <form class="enlist-form" id="enlist-form">
+      <div class="form-row">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-row">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+
+      <div class="form-row">
+        <label for="zip">City / Zip</label>
+        <input type="text" id="zip" name="cityOrZip" required>
+      </div>
+
+      <div class="form-row">
+        <label for="plan">Which rank interests you?</label>
+        <select id="plan" name="plan">
+          <option value="Not sure yet">Not sure yet</option>
+          <option value="Squire's Watch">Squire's Watch — $299/yr</option>
+          <option value="Knight's Guard">Knight's Guard — $799/yr</option>
+        </select>
+      </div>
+
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAAEuaX_m3FdCZOIEh" style="margin-bottom: 20px;"></div>
+
+      <button type="submit" class="btn-primary form-submit">Send the Word</button>
+      <p id="enlist-status" class="enlist-status"></p>
+    </form>
+    <p class="enlist-footnote">No payment is taken here — this just gets a Warden in touch with you.</p>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('[data-plan]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var plan = el.getAttribute('data-plan');
+      var select = document.getElementById('plan');
+      if (select) { select.value = plan; }
+    });
+  });
+
+  // Swap in your actual Supabase Edge Function URL once deployed.
+  // Looks like: https://YOUR_PROJECT_REF.functions.supabase.co/submit-lead
+  const SUBMIT_LEAD_URL = "https://YOUR_PROJECT_REF.functions.supabase.co/submit-lead";
+
+  document.getElementById('enlist-form').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const form = e.target;
+    const statusEl = document.getElementById('enlist-status');
+    const fd = new FormData(form);
+
+    const payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      cityOrZip: fd.get('cityOrZip'),
+      planInterest: fd.get('plan'),
+      turnstileToken: fd.get('cf-turnstile-response')
+    };
+
+    if (!payload.turnstileToken) {
+      statusEl.textContent = "Please complete the verification check above.";
+      return;
+    }
+
+    statusEl.textContent = "Sending word to the guild...";
+
+    try {
+      const res = await fetch(SUBMIT_LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+
+      if (res.ok) {
+        statusEl.textContent = "The word has been sent. A Warden will reach out soon.";
+        form.reset();
+        if (window.turnstile) { turnstile.reset(); }
+      } else {
+        statusEl.textContent = data.error || "Something went wrong — please try again.";
+      }
+    } catch (err) {
+      statusEl.textContent = "Something went wrong — please try again.";
+    }
+  });
+</script>
 
 <footer>
   <div class="footer-row">
